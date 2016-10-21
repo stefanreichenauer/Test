@@ -171,7 +171,12 @@ android {
         targetSdkVersion 22
         applicationId 'org.catrobat.catroid'
         testApplicationId "org.catrobat.catroid.test"
-        testInstrumentationRunner 'org.catrobat.catroid.test.cucumber.Instrumentation'
+        if (project.ext.has("cucumber")) {
+            testInstrumentationRunner 'org.catrobat.catroid.test.cucumber.Instrumentation'
+        } else {
+            testInstrumentationRunner 'pl.polidea.instrumentation.PolideaInstrumentationTestRunner'
+        }
+        //testInstrumentationRunner 'org.catrobat.catroid.test.cucumber.Instrumentation'
         versionCode 30
         println "VersionCode is " + versionCode
         versionName "0.9.23"
