@@ -30,7 +30,7 @@ import cucumber.api.CucumberOptions;
 
 // Here you can configure which feature or feature-subfolder to test.
 @CucumberOptions(features = "features/sensors",
-				 format = {"pretty", "html:/sdcard/cucumber/report"})
+				 format = {"pretty", "html:/sdcard/cucumber/report", "json:/sdcard/cucumber/report.json"})
 public final class Cucumber {
 	public static final String KEY_SOLO = "KEY_SOLO";
 	public static final String KEY_PROJECT = "KEY_PROJECT";

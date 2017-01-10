@@ -7,32 +7,40 @@ Feature: Testing sensors
     And this program has an Object 'Object'
     And Robotarm should be in default position
 
-  Scenario: X acceleration test on not moving devise
+  Scenario: Robotarm not moving
+    Given   I check the sensor values
+    And I am in the main menu
 
-    Given   I am in the main menu
-    Then    X acceleration value should be zero
+    When The Robotarm didn't move
+    Then   'X acceleration' should not be changed
+    And    'Y acceleration' should not be changed
+    And    'Z acceleration' should not be changed
+    And    'X inclination' should not be changed
+    And    'Y inclination' should not be changed
+    And    'compass direction' should not be changed
 
-  Scenario: Y acceleration test on not moving devise
+  Scenario Outline: Robotarm turned on different axis by different degree
+    Given   I check the sensor values
+    And I am in the main menu
 
-    Given   I am in the main menu
-    Then    Y acceleration value should be zero
+    When The Robotarm turns in '<axis>' axis by <degree> degree
+    Then    '<axis>' should be changed by <degree> degree
 
-  Scenario: Z acceleration test on not moving devise
+    Examples:
+    | axis                 | degree |
+    | X inclination        | 45     |
+    | Y inclination        | 45     |
+    | compass direction    | 45     |
 
-    Given   I am in the main menu
-    Then    Z acceleration value should be zero
+  Scenario Outline: Test accelerometer of DUT
+    Given   I check the sensor values
+    And I am in the main menu
 
-  Scenario: X inclination test on not moving devise
+    When The Robotarm prepares the test for the '<axis>' accelerometer
+    Then  The '<axis>' accelerometer test values should be checked
 
-    Given   I am in the main menu
-    Then    X inclination value should be zero
-
-  Scenario: Y inclination test on not moving devise
-
-    Given   I am in the main menu
-    Then    Y inclination value should be zero
-
-  Scenario: compass direction test on not moving devise
-
-    Given   I am in the main menu
-    Then    compass direction value should not change
+    Examples:
+      | axis |
+      | X    |
+      | Y    |
+      | Z    |
