@@ -102,7 +102,7 @@ public class SensorTestSteps extends AndroidTestCase {
 
         switch (axis){
             case "X inclination":
-                sendCommandToRobotarm("turn/X?angle=" + degrees);
+                sendCommandToRobotarm("turn/X?angle=" + -degrees);
                 break;
             case "Y inclination":
                 sendCommandToRobotarm("turn/Y?angle=" + degrees);
@@ -127,7 +127,7 @@ public class SensorTestSteps extends AndroidTestCase {
                 sendCommandToRobotarm("turn/Z?angle=-90");
                 break;
             case "Z":
-                sendCommandToRobotarm("servo/shoulder?dutycycle=23");
+                sendCommandToRobotarm("servo/shoulder?dutycycle=21");
                 sendCommandToRobotarm("turn/Y?angle=-90");
         }
     }
@@ -144,7 +144,7 @@ public class SensorTestSteps extends AndroidTestCase {
                 sendAsynchronousCommandToRobotarm("turn/Z?angle=90", 'Y');
                 break;
             case "Z":
-                sendAsynchronousCommandToRobotarm("servo/shoulder?dutycycle=15", 'Z');
+                sendAsynchronousCommandToRobotarm("servo/shoulder?dutycycle=13", 'Z');
         }
     }
 
@@ -203,7 +203,7 @@ public class SensorTestSteps extends AndroidTestCase {
             case "X inclination":
                 inclination = SensorHandler.getSensorValue(Sensors.X_INCLINATION);
                 Log.e(TAG + " change", "xInclination: " + inclination);
-                assertEquals("Devise did not move", -degrees, inclination, delta);
+                assertEquals("Devise did not move", degrees, inclination, delta);
                 break;
             case "Y inclination":
                 inclination = SensorHandler.getSensorValue(Sensors.Y_INCLINATION);
@@ -222,42 +222,27 @@ public class SensorTestSteps extends AndroidTestCase {
             default:
                 fail("Wrong value for axis");
         }
-       // controlNotMovedAxis(axis);
+       controlNotMovedAxis(axis);
     }
 
     public void controlNotMovedAxis(String axis)
     {
         Double value = 0d;
 
-        if(!axis.equals("X acceleration")) {
-            Log.e(TAG + " change", "xAcceleration: " + xAcceleration);
-            value = SensorHandler.getSensorValue(Sensors.X_ACCELERATION);
-            assertEquals("Devise moved", xAcceleration, value, 4d);
-        }
-        if(!axis.equals("Y acceleration")) {
-            Log.e(TAG + " change", "yAcceleration: " + yAcceleration);
-            value = SensorHandler.getSensorValue(Sensors.Y_ACCELERATION);
-            assertEquals("Devise moved", yAcceleration, value, 4d);
-        }
-        if(!axis.equals("Z acceleration")) {
-            Log.e(TAG + " change", "zAcceleration: " + zAcceleration);
-            value = SensorHandler.getSensorValue(Sensors.Z_ACCELERATION);
-            assertEquals("Devise moved", zAcceleration, value, 4d);
-        }
         if(!axis.equals("X inclination")) {
             Log.e(TAG + " change", "xInclination: " + xInclination);
             value = SensorHandler.getSensorValue(Sensors.X_INCLINATION);
-            assertEquals("Devise moved", xInclination, value, 4d);
+            assertEquals("X inclination off", 0d, value, delta);
         }
         if(!axis.equals("Y inclination")) {
             Log.e(TAG + " change", "yInclination: " + yInclination);
             value = SensorHandler.getSensorValue(Sensors.Y_INCLINATION);
-            assertEquals("Devise moved", yInclination, value, 4d);
+            assertEquals("Y inclination off", 0d, value, delta);
         }
         if(!axis.equals("compass direction")){
                 Log.e(TAG + " change", "compassDirection: " + compassDirection);
                 value = SensorHandler.getSensorValue(Sensors.COMPASS_DIRECTION);
-                assertEquals("Devise moved", compassDirection, value, 4d);
+                assertEquals("Compass direction off", 0d, value, delta);
         }
     }
 
