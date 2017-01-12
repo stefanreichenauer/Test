@@ -52,6 +52,8 @@ public class SensorTestSteps extends AndroidTestCase {
 	private String testingproject = UiTestUtils.PROJECTNAME1;
     private String robotArmURL = "http://192.168.1.195:5000/";
 
+    private Double delta = 20d;
+
     private static final String TAG = SensorTestSteps.class.getSimpleName();
 
     Double xAcceleration = 0d;
@@ -201,12 +203,12 @@ public class SensorTestSteps extends AndroidTestCase {
             case "X inclination":
                 inclination = SensorHandler.getSensorValue(Sensors.X_INCLINATION);
                 Log.e(TAG + " change", "xInclination: " + inclination);
-                assertEquals("Devise did not move", degrees, inclination, 15d);
+                assertEquals("Devise did not move", -degrees, inclination, delta);
                 break;
             case "Y inclination":
                 inclination = SensorHandler.getSensorValue(Sensors.Y_INCLINATION);
                 Log.e(TAG + " change", "yInclination: " + inclination);
-                assertEquals("Devise did not move", degrees, inclination, 15d);
+                assertEquals("Devise did not move", degrees, inclination, delta);
                 break;
             case "compass direction":
                 Double compass = compassDirection + degrees;
@@ -215,7 +217,7 @@ public class SensorTestSteps extends AndroidTestCase {
                 }
                 inclination = SensorHandler.getSensorValue(Sensors.COMPASS_DIRECTION);
                 Log.e(TAG + " change", "compassDirection: " + inclination);
-                assertEquals("Devise did not move", compass, inclination, 20d);
+                assertEquals("Devise did not move", compass, inclination, delta);
                 break;
             default:
                 fail("Wrong value for axis");
