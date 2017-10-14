@@ -67,13 +67,14 @@ public class SensorTestSteps extends AndroidTestCase {
     @Given("^Robotarm should be in default position$")
     public void robotarm_should_be_in_default_position() throws Throwable {
 
-        SensorHandler.startSensorListener(getContext());
         sendCommandToRobotarm("do/set_to_default");
     }
 
     @Given("^I check the sensor values$")
     public void i_check_the_sensor_values() throws Throwable {
 // Write code here that turns the phrase above into concrete actions
+
+        SensorHandler.startSensorListener(getContext());
 
         xAcceleration = SensorHandler.getSensorValue(Sensors.X_ACCELERATION);
         yAcceleration = SensorHandler.getSensorValue(Sensors.Y_ACCELERATION);
@@ -92,6 +93,12 @@ public class SensorTestSteps extends AndroidTestCase {
 
     @When("^The Robotarm didn't move$")
     public void the_Robotarm_didn_t_move() throws Throwable {
+// Write code here that turns the phrase above into concrete actions
+
+    }
+
+    @When("^DUT didn't move$")
+    public void dut_didn_t_move() throws Throwable {
 // Write code here that turns the phrase above into concrete actions
 
     }
@@ -144,7 +151,7 @@ public class SensorTestSteps extends AndroidTestCase {
                 sendAsynchronousCommandToRobotarm("turn/Z?angle=90", 'Y');
                 break;
             case "Z":
-                sendAsynchronousCommandToRobotarm("servo/shoulder?dutycycle=13", 'Z');
+                sendAsynchronousCommandToRobotarm("servo/shoulder?dutycycle=17", 'Z');
         }
     }
 
@@ -242,7 +249,7 @@ public class SensorTestSteps extends AndroidTestCase {
         if(!axis.equals("compass direction")){
                 Log.e(TAG + " change", "compassDirection: " + compassDirection);
                 value = SensorHandler.getSensorValue(Sensors.COMPASS_DIRECTION);
-                assertEquals("Compass direction off", 0d, value, delta);
+                assertEquals("Compass direction off", compassDirection, value, delta);
         }
     }
 
